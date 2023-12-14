@@ -21,12 +21,13 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy ARM/Bicep Template
-        uses: Azure/deploy-azure-resource-group@v1
+      - name: deploy
+        uses: azure/arm-deploy@v1
         with:
-          resource-group: '${{ secrets.AZURE_RG }}'
-          template: '././InfrastructureAsCode/main.bicep'  # Update the path to your template file
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          resourceGroupName: ${{ secrets.AZURE_RG }}
+          template: ././InfrastructureAsCode/main.bicep
           parameters: '{}'
-          overrideParameters: '-environment=${{ github.event.inputs.environment }}'
+
 
     
