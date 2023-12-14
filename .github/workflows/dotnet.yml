@@ -70,3 +70,9 @@ jobs:
       - name: Docker Push
         run: docker push ${{ env.registryName }}/${{ env.repositoryName }}:${{ env.tag }}
 
+      - name: web app deploy
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'nckckcah2pqk4-dev'
+          images: "${{ env.registryName }}/${{ env.repositoryName }}:${{ env.tag }}"
+
