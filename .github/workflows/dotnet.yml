@@ -79,7 +79,7 @@ jobs:
       - name: web app deploy
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "${{ env.APP_NAME}}"
+          app-name: "${{ vars.APP_NAME}}"
           images: "${{ env.registryName }}/${{ env.repositoryName }}:${{ env.tag }}"
  
   deploy-to-test:
@@ -96,6 +96,6 @@ jobs:
       - name: web app deploy
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "${{ env.APP_NAME}}"
+          app-name: "${{ vars.APP_NAME}}"
           images: "${{ env.registryName }}/${{ env.repositoryName }}:${{ env.tag }}"
 
