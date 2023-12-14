@@ -37,7 +37,7 @@ jobs:
         run: dotnet restore Application/src/RazorPagesTestSample/RazorPagesTestSample.csproj
 
       - name: Build
-        run: dotnet build Application/src/RazorPagesTestSample/RazorPagesTestSample.csproj --configuration Release
+        run: dotnet build Application/src/RazorPagesTestSample/RazorPagesTestSample.csproj --configuration Debug
 
       - name: Restore Test
         run: dotnet restore Application/tests/RazorPagesTestSample.Tests/RazorPagesTestSample.Tests.csproj
