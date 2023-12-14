@@ -39,6 +39,9 @@ jobs:
       - name: Build
         run: dotnet build Application/src/RazorPagesTestSample/RazorPagesTestSample.csproj --configuration Release
 
+      - name: Build Test
+        run: dotnet build Application/tests/RazorPagesTestSample.Tests/RazorPagesTestSample.Tests.csproj
+        
       - name: Test
         run: dotnet test Application/tests/RazorPagesTestSample.Tests/RazorPagesTestSample.Tests.csproj
 
