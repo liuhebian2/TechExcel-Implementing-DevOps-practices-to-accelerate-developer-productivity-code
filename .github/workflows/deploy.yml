@@ -1,0 +1,32 @@
+name: Azure Deployment Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment (dev, test, prod)'
+        required: true
+        default: 'dev'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Login to Azure using Service Principal
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy ARM/Bicep Template
+        uses: Azure/deploy-azure-resource-group@v1
+        with:
+          resource-group: '${{ secrets.AZURE_RG }}'
+          template: '././InfrastructureAsCode/main.bicep'  # Update the path to your template file
+          parameters: '{}'
+          overrideParameters: '-environment=${{ github.event.inputs.environment }}'
+
+    
