@@ -48,10 +48,11 @@ jobs:
       - name: Test
         run: dotnet test Application/tests/RazorPagesTestSample.Tests/RazorPagesTestSample.Tests.csproj
 
-  deploy:
+  deploy-to-dev:
     needs: build  # Specify that the deploy job depends on the completion of the build job
     runs-on: ubuntu-latest
-
+    environment:
+      name: dev
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -78,6 +79,23 @@ jobs:
       - name: web app deploy
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'nckckcah2pqk4-dev'
+          app-name: "${{ env.APP_NAME}}"
+          images: "${{ env.registryName }}/${{ env.repositoryName }}:${{ env.tag }}"
+ 
+  deploy-to-test:
+    needs: deploy-to-dev  # Specify that the deploy job depends on the completion of the build job
+    runs-on: ubuntu-latest
+    environment:
+      name: test
+    steps:
+      - name: Login to Azure using Service Principal
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: web app deploy
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: "${{ env.APP_NAME}}"
           images: "${{ env.registryName }}/${{ env.repositoryName }}:${{ env.tag }}"
 
