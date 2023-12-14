@@ -15,7 +15,7 @@ on:
       - 'Application/**'
 
 env:
-  registryName: "techexceldevops.azurecr.io"  # Replace with your ACR registry name
+  registryName: "nckckcah2pqk4.azurecr.io"  # Replace with your ACR registry name
   repositoryName: "techboost/dotnetcoreapp"
   dockerFolderPath: "Application/src/RazorPagesTestSample"
   tag: ${{ github.run_number }}
