@@ -1,0 +1,11 @@
+version: v0.1
+testId: SampleTest
+displayName: Sample Test
+description: Load test website home page
+testPlan: SampleTest.jmx
+testType: JMX
+engineInstances: 1
+failureCriteria:
+  - avg(response_time_ms) > 300
+  - percentage(error) > 50
+  - GetCustomerDetails: avg(latency) >200
