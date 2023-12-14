@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  websiteurl: "https://nckckcah2pqk4-dev.azurewebsites.net/" 
+  websitehost: "nckckcah2pqk4-dev.azurewebsites.net" 
 
 jobs:
   loadtest:
@@ -30,6 +30,6 @@ jobs:
             [
                 {
                 "name": "website",
-                "value": "${{env.websiteurl}}"
+                "value": ${{env.websitehost}}
                 }
             ]
