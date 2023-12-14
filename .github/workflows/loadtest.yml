@@ -30,6 +30,6 @@ jobs:
             [
                 {
                 "name": "website",
-                "value": ${{env.websitehost}}
+                "value": "${{env.websitehost}}"
                 }
             ]
