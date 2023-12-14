@@ -28,5 +28,5 @@ jobs:
         uses: mscoutermarsh/cowsays-action@v1
         with:
           text: "hello TechExcelDevOps"
-          color: "yellow"
+          color: 'yellow'
           
