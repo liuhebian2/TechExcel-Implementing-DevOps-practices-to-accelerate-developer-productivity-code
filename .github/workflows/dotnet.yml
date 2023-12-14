@@ -1,0 +1,63 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "master" ]
+    paths:
+      - 'Application/**'
+  pull_request:
+    branches: [ "master" ]
+    paths:
+      - 'Application/**'
+
+env:
+  registryName: "techexceldevops.azurecr.io"  # Replace with your ACR registry name
+  repositoryName: "techboost/dotnetcoreapp"
+  dockerFolderPath: "Application/src/RazorPagesTestSample"
+  tag: ${{ github.run_number }}
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v7
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Restore
+        run: dotnet restore Application/src/RazorPagesTestSample/RazorPagesTestSample.csproj
+
+      - name: Build
+        run: dotnet build Application/src/RazorPagesTestSample/RazorPagesTestSample.csproj --configuration Release
+
+      - name: Test
+        run: dotnet test Application/tests/UnitTestProject/UnitTestProject.csproj
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v7
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Docker Login
+        run: docker login ${{ env.registryName }} -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }}
+
+      - name: Docker Build
+        run: docker build -t ${{ env.registryName }}/${{ env.repositoryName }}:${{ env.tag }} --build-arg build_version=${{ env.tag }} ${{ env.dockerFolderPath }}
+
+      - name: Docker Push
+        run: docker push ${{ env.registryName }}/${{ env.repositoryName }}:${{ env.tag }}
