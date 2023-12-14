@@ -40,7 +40,7 @@ jobs:
         run: dotnet build Application/src/RazorPagesTestSample/RazorPagesTestSample.csproj --configuration Release
 
       - name: Test
-        run: dotnet test Application/tests/UnitTestProject/UnitTestProject.csproj
+        run: dotnet test Application/tests/RazorPagesTestSample.Tests/RazorPagesTestSample.Tests.csproj
 
   deploy:
     needs: build  # Specify that the deploy job depends on the completion of the build job
