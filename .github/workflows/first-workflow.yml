@@ -1,0 +1,32 @@
+name: first-workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Step 1
+        run: echo "Step 1 complete!"
+
+      - name: Step 2
+        run: echo "Step 2 complete!"
+
+  job2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Run Cowsays Action
+        uses: actions/gh-script@v0.7.0
+        with:
+          script: |
+            npx cowsay -f moose "Ready for prod–ship it!"
+            echo "::set-output name=color::magenta"
