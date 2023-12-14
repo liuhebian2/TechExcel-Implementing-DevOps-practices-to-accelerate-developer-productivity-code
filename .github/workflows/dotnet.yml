@@ -99,3 +99,21 @@ jobs:
           app-name: "${{ vars.APP_NAME}}"
           images: "${{ env.registryName }}/${{ env.repositoryName }}:${{ env.tag }}"
 
+
+  deploy-to-prod:
+    needs: deploy-to-test  # Specify that the deploy job depends on the completion of the build job
+    runs-on: ubuntu-latest
+    environment:
+      name: prod
+    steps:
+      - name: Login to Azure using Service Principal
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: web app deploy
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: "${{ vars.APP_NAME}}"
+          images: "${{ env.registryName }}/${{ env.repositoryName }}:${{ env.tag }}"
+
